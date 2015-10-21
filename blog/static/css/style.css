@@ -31,3 +31,19 @@ h1#logo a{
 p.meta{
 	padding-left:15px;
 }
+.navbar-default .navbar-nav>.active>a{
+	
+	background:none !important;
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important; 
+}
+.navbar-default {
+	background:none !important;
+	border:none !important;
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important; 
+}
+.navbar{
+	
+	margin:0 !important;
+}
