@@ -4,6 +4,9 @@ from django.shortcuts import render, get_object_or_404, redirect, render_to_resp
 from .models import Post
 from django.utils import timezone
 from .forms import PostForm
+from django.contrib.auth.models import User
+
+
 
 # def post_list(request):
 #     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -15,13 +18,19 @@ from .forms import PostForm
 
 class PostListView(ListView):
     model = Post
-    queryset = Post.objects.all()
-    print queryset
+    def get_context_data(self, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+        return context
+
+    def get_queryset(self):
+        user = self.request.user
+        return Post.objects.filter(author=user)
+    # queryset = get_object_or_404(Post, author=author)
+    # print queryset
 
 class PostDetailView(DetailView):
     model = Post
     queryset = Post.objects.all()
-    print queryset
 
 
 def post_new(request):
