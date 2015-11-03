@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container top-button">
+<div class=header style=" display: table;margin: 0 auto;">
+	<a href="/changep/{{ b.id }}/">Change Password | </a><a href="/logout/">Logout</a></div></div>
+<div class="container containertab" style="margin-top:5%;width:30%;">
+		 <div class="row" style="padding:20px;">
+			<h3 class="pull-left"> Welcome {{ b.username }} ,</h3>
+          <form role="form" action="/edit/{{ b.id }}/" method="post"> {% csrf_token %}
+	{% if form.non_field_errors %}
+            <p class="error">
+		          {% for error in form.non_field_errors %}
+		            {{ error }}
+		          {% endfor %}
+            </p>
+           {% endif %}
+	<input type="hidden" value={{ b.id }} />
+	<div class="cols-lg-4 cols-md-4">
+            <div class="form-group">
+		
+	   </div>
+	</div>
+	<div class="cols-lg-4 cols-md-4">
+            <div class="form-group">
+		<input type="text" id="first_name" name="first_name" value= "{{ b.first_name }}" >
+	   </div>
+	</div>
+	<div class="cols-lg-4 cols-md-4">
+            <div class="form-group">
+		<input type="text" id="last_name" name="last_name" value= "{{ b.last_name }}" >
+	   </div>
+	</div>
+	</div>
+	<div class="cols-lg-4 cols-md-4 cols-sm-4">
+            <div class="form-group">
+		<input type="text" id="email" name=email value="{{ b.email }}" >
+	   </div>
+	</div>
+<br/>
+		
+    		<input type="submit" class="btn btn-success" value="Save" />
+   	  </form>
+  <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1980:2012",
+    });
+  });
+  </script>
+      </div>
+    </div>
+{% endblock %}
