@@ -1,15 +1,22 @@
-{% extends "blog/base.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-			<div class="post">
-				{% for post in posts %}
-	    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 post">
-	        		<a class="post_title" href="{% url "post_detail" pk=post.pk %}">{{ post.title }}</a>
-	        		<p class="meta">published: {{ post.published_date }}</p>
-	       		 	<p>{{ post.text|linebreaks }}</p>
-	    		</div>
-				{% endfor %}
-			</div>
-				
-{% endblock content %}
+	<div class="container-fluid">
 
+	</div>
+	<div class="container">
+			<div class="row">
+				<div class="post">
+					{% for post in object_list %}
+		    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 post">
+		        		<a class="post_title" href="{% url "posts:post_detail" pk=post.pk %}">{{ post.title }}</a>
+		        		<p class="meta">published: {{ post.published_date }}</p>
+		       		 	<p>{{ post.text|linebreaks }}</p>
+		    		</div>
+					{% endfor %}
+				</div>
+			</div>
+	</div>
+
+
+{% endblock content %}
