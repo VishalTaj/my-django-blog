@@ -19,7 +19,9 @@
 	</div>
 	<div class="container">
 			<div class="row form">
+				<form action="/search/" method="get" >{% csrf_token %}
 					<input type="search" name="q" id="q" placeholder="Search.."/>
+				</form>
 			</div>
 			<div class="row">
 				<div id="results"></div>
@@ -42,13 +44,12 @@
     event.preventDefault();
 		var search = $('#q').val()
 	 var data = {
-			 search: search
+			 q: search
 	 };
     $.ajax({
       url:"{% url 'posts:search' %}",
       type:"GET",
       data:data,
-			cache:false,
 			dataType: 'jsonp',
 			jsonp: 'callback',
 			jsonpCallback: 'searchResult'

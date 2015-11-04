@@ -35,19 +35,19 @@ p.meta{
 	padding-left:15px;
 }
 .navbar-default .navbar-nav>.active>a{
-	
+
 	background:none !important;
 	box-shadow: none !important;
-	-webkit-box-shadow: none !important; 
+	-webkit-box-shadow: none !important;
 }
 .navbar-default {
 	background:none !important;
 	border:none !important;
 	box-shadow: none !important;
-	-webkit-box-shadow: none !important; 
+	-webkit-box-shadow: none !important;
 }
 .navbar{
-	
+
 	margin:0 !important;
 }
 label{
@@ -66,6 +66,15 @@ a span{
 textarea{
 	resize:none;
 }
+input[type="text"],input[type="password"]{
+	height:40px;
+	padding-left:15px;
+}
 input,textarea{
 	width:80%;
+}
+input[type="submit"], button, .btn {
+	border:none;
+	background: rgba(150,164,252,0.7) !important;
+	outline:1px solid #CCC;
 }

@@ -70,7 +70,7 @@ def search_box(request):
         if q is not None:
             ser_results = serializers.serialize('json', Post.objects.filter(
                 Q( title__contains = q )))
-            print ser_results
+            l = ast.literal_eval(ser_results)
             mimetype = 'application/json'
             return HttpResponse({'data': ser_results},content_type='application/json')
         else:
