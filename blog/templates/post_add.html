@@ -7,5 +7,20 @@
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Submit</button>
     </form>
+    <div id="results"></div>
 </div>
+{% endblock %}
+{% block jquery %}
+  $("#id_title").on('blur', function(event){
+    event.preventDefault();
+    $.ajax({
+      url:"{% url 'posts:title_check' %}",
+      type:"POST",
+      data:{title : $('#id_title').val(), csrfmiddlewaretoken: '{{ csrf_token }}'},
+      success : function(data) {
+            if(data == "error occured")
+              console.log("title already exist"); // log the returned json to the console
+        },
+    });
+  });
 {% endblock %}

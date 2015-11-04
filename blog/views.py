@@ -1,12 +1,14 @@
 from django.core.urlresolvers import reverse
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, get_object_or_404, redirect, render_to_response
+from django.http import HttpResponse
 from .models import Post
 from django.utils import timezone
 from .forms import PostForm
 from django.contrib.auth.models import User
-
-
+from django.db.models import Q
+import json
+from django.core import serializers
 
 # def post_list(request):
 #     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -24,7 +26,12 @@ class PostListView(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        return Post.objects.filter(author=user)
+        if user == 'vishal':
+            return Post.objects.filter(author=user)
+        else:
+            return Post.objects.all()
+
+
     # queryset = get_object_or_404(Post, author=author)
     # print queryset
 
@@ -47,6 +54,27 @@ def post_new(request):
     else:
         form = PostForm()
     return render(request, 'post_add.html', {'form': form})
+
+def post_title(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        if Post.objects.filter(title = title):
+            print title
+            return HttpResponse("error occured")
+        else:
+            return HttpResponse("No issues")
+
+def search_box(request):
+    if request.is_ajax():
+        q = request.GET.get( 'q' )
+        if q is not None:
+            ser_results = serializers.serialize('json', Post.objects.filter(
+                Q( title__contains = q )))
+            print ser_results
+            mimetype = 'application/json'
+            return HttpResponse({'data': ser_results},content_type='application/json')
+        else:
+            return HttpResponse("im Not None")
 
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)

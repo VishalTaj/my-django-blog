@@ -1,20 +1,35 @@
 {% extends "base.html" %}
+{% block styles %}
+.form{
+	text-align:center;
+	padding:15px 0;
+}
+.form input{
+	width:50%;
+	border:5px solid transparent;
+	background-color: rgba(255,224,235,0.2);
+	margin:2px;
+	outline:1px solid #CCC;
 
+}
+{% endblock %}
 {% block content %}
 	<div class="container-fluid">
 
 	</div>
 	<div class="container">
+			<div class="row form">
+					<input type="search" name="q" id="q" placeholder="Search.."/>
+			</div>
 			<div class="row">
+				<div id="results"></div>
 				<div class="post">
 					{% for post in object_list %}
-						{% if user == post.author %}
 			    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 post">
 			        		<a class="post_title" href="{% url "posts:post_detail" pk=post.pk %}">{{ post.title }}</a>
-			        		<p class="meta">published: {{ user }} {{ post.published_date }}</p>
+			        		<p class="meta">published: {{ post.author }} {{ post.published_date }}</p>
 			       		 	<p>{{ post.text|linebreaks }}</p>
 			    		</div>
-						{% endif %}
 					{% endfor %}
 				</div>
 			</div>
@@ -22,3 +37,26 @@
 
 
 {% endblock content %}
+{% block jquery %}
+  $("#q").keyup(function(event){
+    event.preventDefault();
+		var search = $('#q').val()
+	 var data = {
+			 search: search
+	 };
+    $.ajax({
+      url:"{% url 'posts:search' %}",
+      type:"GET",
+      data:data,
+			cache:false,
+			dataType: 'jsonp',
+			jsonp: 'callback',
+			jsonpCallback: 'searchResult'
+    });
+		function searchResult(data) {
+    	$( "#q" ).autocomplete ({
+        	source: data
+    	});
+		}
+  });
+{% endblock %}
