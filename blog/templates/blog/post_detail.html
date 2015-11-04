@@ -10,7 +10,7 @@
             </div>
         {% endif %}
         <p class="content">{{ post.text|linebreaks }}</p>
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated  %}
         	<a class="btn btn-default pull-right" href="{% url "posts:post_edit" pk=post.pk %}"><span class="glyphicon glyphicon-pencil paddinzero"></span></a>
     	  {% endif %}
     </div>
