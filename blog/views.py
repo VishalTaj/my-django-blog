@@ -26,10 +26,13 @@ class PostListView(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        if user == 'vishal':
+        if user.is_superuser:
+            return Post.objects.all()
+        elif user.is_active :
             return Post.objects.filter(author=user)
         else:
             return Post.objects.all()
+
 
 
     # queryset = get_object_or_404(Post, author=author)
@@ -67,11 +70,10 @@ def search_box(request):
     if request.is_ajax():
         q = request.GET.get( 'q' )
         if q is not None:
-            # ser_results = serializers.serialize('json', Post.objects.filter(
-            #     Q( title__contains = q )))
-            ser_results = Post.objects.filter(
-                Q( title__contains = q ))
-            mimetype = 'application/json'
+            ser_results = serializers.serialize('json', Post.objects.filter(
+                Q( title__contains = q )))
+            # ser_results = Post.objects.filter(
+            #     Q( title__contains = q ))
             return HttpResponse({'data': ser_results},content_type='application/json')
         else:
             return HttpResponse("im Not None")

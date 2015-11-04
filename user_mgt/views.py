@@ -14,7 +14,6 @@ def login_view(request):
         if request.method=='POST':
             form = LoginForm(request.POST)
             user = authenticate(username=request.POST['username'],password=request.POST['password'])
-            print user
             b = User.objects.get(username=request.POST['username'])
             if user is not None:
 		    	if user.is_active:
