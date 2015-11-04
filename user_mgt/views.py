@@ -16,9 +16,9 @@ def login_view(request):
             user = authenticate(username=request.POST['username'],password=request.POST['password'])
             b = User.objects.get(username=request.POST['username'])
             if user is not None:
-		    	if user.is_active:
-		        	login(request,user)
-		        	return HttpResponseRedirect('/blog/')
+            	if user.is_active:
+            		login(request,user)
+		        return HttpResponseRedirect('/blog/')
         form = LoginForm()
         return render_to_response('login.html',{'form':form},context_instance=RequestContext(request))
 
