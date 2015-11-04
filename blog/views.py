@@ -59,7 +59,6 @@ def post_title(request):
     if request.method == "POST":
         title = request.POST.get('title')
         if Post.objects.filter(title = title):
-            print title
             return HttpResponse("error occured")
         else:
             return HttpResponse("No issues")
@@ -68,9 +67,10 @@ def search_box(request):
     if request.is_ajax():
         q = request.GET.get( 'q' )
         if q is not None:
-            ser_results = serializers.serialize('json', Post.objects.filter(
-                Q( title__contains = q )))
-            l = ast.literal_eval(ser_results)
+            # ser_results = serializers.serialize('json', Post.objects.filter(
+            #     Q( title__contains = q )))
+            ser_results = Post.objects.filter(
+                Q( title__contains = q ))
             mimetype = 'application/json'
             return HttpResponse({'data': ser_results},content_type='application/json')
         else:

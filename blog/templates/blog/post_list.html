@@ -55,6 +55,7 @@
 			jsonpCallback: 'searchResult'
     });
 		function searchResult(data) {
+			alert(data);
     	$( "#q" ).autocomplete ({
         	source: data
     	});
